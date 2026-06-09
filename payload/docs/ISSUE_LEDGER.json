@@ -1,0 +1,91 @@
+{
+  "meta": {
+    "project": "replace-me",
+    "version": "1.0",
+    "last_updated": "2026-06-09",
+    "status_values": ["done", "in_progress", "planned", "blocked"],
+    "policy": "Only issues with verifiable evidence can be marked done.",
+    "semantic_required_fields_for_open": [
+      "problem_statement",
+      "scope_in",
+      "scope_out",
+      "target_files",
+      "implementation_steps",
+      "test_plan",
+      "success_metrics",
+      "dependencies"
+    ],
+    "quality_gate_min_score_for_agentic": 80,
+    "agentic_execution_mode": "hybrid",
+    "agentic_execution_policy": "Sync is always allowed; automatic execution is blocked only when gate=blocked.",
+    "quality_score_weights": {
+      "problem_statement": 15,
+      "scope_in": 15,
+      "scope_out": 10,
+      "target_files": 15,
+      "implementation_steps": 15,
+      "test_plan": 15,
+      "success_metrics": 10,
+      "dependencies": 5
+    }
+  },
+  "issues": [
+    {
+      "id": "BOOT-001",
+      "title": "Bootstrap issue governance",
+      "phase": "phase0",
+      "status": "planned",
+      "priority": "high",
+      "type": "ops",
+      "github": {
+        "number": null,
+        "url": null
+      },
+      "evidence": [
+        "docs/ISSUE_GOVERNANCE.md",
+        "docs/ISSUE_LEDGER.json",
+        "scripts/governance/sync_issue_ledger.py"
+      ],
+      "acceptance_criteria": [
+        "Audit passes locally",
+        "GitHub dry-run sync works",
+        "Issue template contains semantic scope sections"
+      ],
+      "problem_statement": "Repository lacks a governance baseline for issue quality and agentic execution.",
+      "scope_in": [
+        "Install governance files",
+        "Enable scoring and hybrid policy",
+        "Run audit and dry-run sync"
+      ],
+      "scope_out": [
+        "Implement product code",
+        "Perform full migration of historical issues"
+      ],
+      "dependencies": [],
+      "target_files": [
+        "docs/ISSUE_GOVERNANCE.md",
+        "docs/ISSUE_LEDGER.json",
+        "scripts/governance/sync_issue_ledger.py",
+        ".github/workflows/issue-ledger-audit.yml"
+      ],
+      "implementation_steps": [
+        "Copy governance payload",
+        "Set project metadata",
+        "Run audit and generate report"
+      ],
+      "test_plan": [
+        "Audit command exits successfully",
+        "Report generated under docs",
+        "Dry-run sync lists expected actions"
+      ],
+      "success_metrics": [
+        "Gate score >= 80 for bootstrap issue",
+        "No audit validation errors"
+      ],
+      "risks": [
+        "Missing GitHub CLI authentication",
+        "Repository without origin remote"
+      ]
+    }
+  ]
+}
