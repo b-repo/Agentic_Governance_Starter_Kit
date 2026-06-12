@@ -30,7 +30,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PAYLOAD_DIR="$SCRIPT_DIR/payload"
 
 if [[ -z "$TARGET" ]]; then
-  TARGET="$PWD"
+  TARGET="$(cd "$SCRIPT_DIR/.." && pwd)"
 fi
 
 if [[ ! -d "$TARGET" ]]; then
