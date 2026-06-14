@@ -5,18 +5,14 @@
 ## Summary
 
 - Total issues: **2**
-- Done: **1**
-- Open: **1**
+- Done: **2**
+- Open: **0**
 - Audit status: **pass**
 
 ## Quality Score
 
 - Agentic gate minimum: **80**
-- Average open issue score: **100.0**
-
-| Issue | Score | Gate | Missing |
-|---|---:|---|---|
-| `GOV-001` | 100 | ready | - |
+- Average open issue score: **0.0**
 
 ## Findings
 
