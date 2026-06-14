@@ -1,0 +1,69 @@
+- name: ledger-managed
+  color: "1D76DB"
+  description: Issue is managed from docs/ISSUE_LEDGER.json.
+- name: phase:0
+  color: "5319E7"
+  description: Bootstrap, governance, and setup work.
+- name: phase:1
+  color: "5319E7"
+  description: First delivery phase.
+- name: phase:2
+  color: "5319E7"
+  description: Second delivery phase.
+- name: phase:3
+  color: "5319E7"
+  description: Third delivery phase.
+- name: type:architecture
+  color: "5319E7"
+  description: Architecture decisions and structural design work.
+- name: type:bug
+  color: "D73A4A"
+  description: Defect correction.
+- name: type:documentation
+  color: "0075CA"
+  description: Documentation work.
+- name: type:feature
+  color: "A2EEEF"
+  description: User-visible capability or product behavior.
+- name: type:governance
+  color: "0E8A16"
+  description: Governance process, automation, or audit work.
+- name: type:risk
+  color: "D93F0B"
+  description: Risk mitigation or control work.
+- name: type:technical-debt
+  color: "C2E0C6"
+  description: Maintainability or remediation work.
+- name: priority:high
+  color: "FBCA04"
+  description: High priority work.
+- name: priority:medium
+  color: "FBCA04"
+  description: Medium priority work.
+- name: priority:low
+  color: "FBCA04"
+  description: Low priority work.
+- name: status:planned
+  color: "BFDADC"
+  description: Planned in the ledger, not started.
+- name: status:in-progress
+  color: "0E8A16"
+  description: Work is actively progressing.
+- name: status:blocked
+  color: "D93F0B"
+  description: Work cannot proceed without a blocker being resolved.
+- name: status:done
+  color: "0E8A16"
+  description: Work is complete and evidence is linked.
+- name: gate:ready
+  color: "0E8A16"
+  description: Agentic execution is allowed.
+- name: gate:review
+  color: "FBCA04"
+  description: Agentic execution is allowed with review recommended.
+- name: gate:blocked
+  color: "D93F0B"
+  description: Automatic agentic execution is blocked.
+- name: gate:done
+  color: "BFDADC"
+  description: Gate no longer applies because the issue is complete.

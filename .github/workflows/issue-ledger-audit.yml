@@ -1,0 +1,42 @@
+name: Issue Ledger Audit
+
+"on":
+  pull_request:
+    paths:
+      - "docs/ISSUE_LEDGER.json"
+      - "docs/ISSUE_LEDGER_AUDIT.md"
+      - "docs/ISSUE_GOVERNANCE.md"
+      - "docs/OFFICIAL_DOCS_POLICY.md"
+      - "docs/STARTER_KIT_DEVELOPER_GUIDANCE.md"
+      - "scripts/governance/sync_issue_ledger.py"
+      - "scripts/governance/check_starter_kit_updates.py"
+      - ".github/workflows/issue-ledger-audit.yml"
+      - ".github/workflows/issue-ledger-sync.yml"
+      - ".github/labels.yml"
+      - ".github/ISSUE_TEMPLATE/**"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run issue ledger audit
+        run: |
+          python scripts/governance/sync_issue_ledger.py --audit --report
+
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-ledger-audit-report
+          path: docs/ISSUE_LEDGER_AUDIT.md

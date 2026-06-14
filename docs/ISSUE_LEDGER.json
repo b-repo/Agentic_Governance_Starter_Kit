@@ -1,0 +1,199 @@
+{
+  "meta": {
+    "project": "Agentic_Governance_Starter_Kit",
+    "version": "1.1",
+    "last_updated": "2026-06-14",
+    "status_values": [
+      "done",
+      "in_progress",
+      "planned",
+      "blocked"
+    ],
+    "policy": "Only issues with verifiable evidence can be marked done.",
+    "semantic_required_fields_for_open": [
+      "problem_statement",
+      "scope_in",
+      "scope_out",
+      "target_files",
+      "implementation_steps",
+      "test_plan",
+      "success_metrics",
+      "dependencies"
+    ],
+    "quality_gate_min_score_for_agentic": 80,
+    "agentic_execution_mode": "hybrid",
+    "agentic_execution_policy": "Sync is always allowed; automatic execution is blocked only when gate=blocked.",
+    "quality_score_weights": {
+      "problem_statement": 15,
+      "scope_in": 15,
+      "scope_out": 10,
+      "target_files": 15,
+      "implementation_steps": 15,
+      "test_plan": 15,
+      "success_metrics": 10,
+      "dependencies": 5
+    }
+  },
+  "issues": [
+    {
+      "id": "BOOT-001",
+      "title": "Bootstrap issue governance",
+      "phase": "0",
+      "status": "done",
+      "priority": "high",
+      "type": "governance",
+      "github": {
+        "number": 1,
+        "url": "https://github.com/b-repo/Agentic_Governance_Starter_Kit/issues/1"
+      },
+      "github_number": 1,
+      "github_url": "https://github.com/b-repo/Agentic_Governance_Starter_Kit/issues/1",
+      "evidence": [
+        "docs/ISSUE_GOVERNANCE.md",
+        "docs/ISSUE_LEDGER.json",
+        "docs/ISSUE_LEDGER_AUDIT.md",
+        "scripts/governance/sync_issue_ledger.py",
+        ".github/workflows/issue-ledger-audit.yml",
+        ".github/workflows/issue-ledger-sync.yml",
+        ".github/labels.yml",
+        ".github/ISSUE_TEMPLATE/bug.yml",
+        ".github/ISSUE_TEMPLATE/feature.yml",
+        ".github/ISSUE_TEMPLATE/architecture-decision.yml",
+        ".github/ISSUE_TEMPLATE/technical-debt.yml",
+        ".github/ISSUE_TEMPLATE/governance-gap.yml",
+        ".github/ISSUE_TEMPLATE/documentation.yml"
+      ],
+      "acceptance_criteria": [
+        "Audit passes locally",
+        "GitHub dry-run sync works",
+        "GitHub apply sync works when credentials are available",
+        "Health check reports zero governance drift",
+        "Issue templates and labels are present"
+      ],
+      "problem_statement": "Repository lacks a mandatory, executable, auditable, and self-synchronizing governance baseline for issue quality and GitHub Issue synchronization.",
+      "scope_in": [
+        "Install governance files",
+        "Enable scoring and hybrid policy",
+        "Install issue templates and label definitions",
+        "Run audit, dry-run sync, apply sync, and health-check"
+      ],
+      "scope_out": [
+        "Implement product code",
+        "Perform full migration of historical issues"
+      ],
+      "dependencies": [],
+      "target_files": [
+        "docs/ISSUE_GOVERNANCE.md",
+        "docs/ISSUE_LEDGER.json",
+        "docs/ISSUE_LEDGER_AUDIT.md",
+        "scripts/governance/sync_issue_ledger.py",
+        ".github/workflows/issue-ledger-audit.yml",
+        ".github/workflows/issue-ledger-sync.yml",
+        ".github/labels.yml",
+        ".github/ISSUE_TEMPLATE/"
+      ],
+      "implementation_steps": [
+        "Copy governance payload",
+        "Set project metadata",
+        "Run audit and generate report",
+        "Run dry-run synchronization",
+        "Run apply synchronization when credentials are available",
+        "Run health-check and confirm zero governance drift"
+      ],
+      "test_plan": [
+        "Audit command exits successfully",
+        "Report generated under docs",
+        "Dry-run sync lists expected actions",
+        "Apply validates GitHub authentication before writing",
+        "Health-check fails when drift is detected"
+      ],
+      "success_metrics": [
+        "Gate score >= 80 for bootstrap issue",
+        "No audit validation errors",
+        "No duplicate GitHub Issues are created by repeated apply runs",
+        "governance_drift remains 0 after apply"
+      ],
+      "risks": [
+        "Missing GitHub CLI authentication",
+        "Repository without origin remote"
+      ]
+    },
+    {
+      "id": "GOV-001",
+      "title": "Enforce ledger-first issue governance in the starter kit",
+      "phase": "0",
+      "status": "in_progress",
+      "priority": "high",
+      "type": "governance",
+      "github": {
+        "number": 4,
+        "url": "https://github.com/b-repo/Agentic_Governance_Starter_Kit/issues/4"
+      },
+      "github_number": 4,
+      "github_url": "https://github.com/b-repo/Agentic_Governance_Starter_Kit/issues/4",
+      "evidence": [],
+      "acceptance_criteria": [
+        "Sync adopts existing GitHub Issues by github.number",
+        "Health-check reports unmanaged open issues as governance drift",
+        "Installed workflows detect issue-event drift",
+        "Starter kit repository contains its own root issue ledger and governance files",
+        "Documentation tells developer agents to use ledger-first issue handling"
+      ],
+      "problem_statement": "The starter kit distributed governance assets but did not govern its own repository from a root ledger. It also allowed manual GitHub Issues to remain outside the ledger until discovered by process review.",
+      "scope_in": [
+        "Install the starter kit governance payload into the starter kit repository root",
+        "Add root docs/ISSUE_LEDGER.json as the starter kit source of truth",
+        "Harden sync to match existing issues by github.number",
+        "Report unmanaged open issues in health-check output",
+        "Document ledger-first issue behavior for agents and starter kit maintainers"
+      ],
+      "scope_out": [
+        "Changing downstream repositories directly",
+        "Adding product-specific issues to the starter kit ledger",
+        "Replacing GitHub branch protection or repository rulesets"
+      ],
+      "dependencies": [
+        "BOOT-001"
+      ],
+      "target_files": [
+        "AGENT_BOOTSTRAP_PROMPT.md",
+        "README.md",
+        "install.sh",
+        "docs/ISSUE_LEDGER.json",
+        "docs/ISSUE_GOVERNANCE.md",
+        "payload/docs/ISSUE_GOVERNANCE.md",
+        "payload/docs/STARTER_KIT_DEVELOPER_GUIDANCE.md",
+        "payload/scripts/governance/sync_issue_ledger.py",
+        "payload/.github/workflows/issue-ledger-sync.yml",
+        "scripts/governance/sync_issue_ledger.py",
+        ".github/workflows/issue-ledger-sync.yml"
+      ],
+      "implementation_steps": [
+        "Support self-install in install.sh",
+        "Run the installer against the starter kit repository root",
+        "Add root ledger entries for bootstrap and current governance hardening",
+        "Update sync to adopt issues by github.number",
+        "Update health-check to detect unmanaged open issues",
+        "Update documentation and installed workflow triggers"
+      ],
+      "test_plan": [
+        "Compile payload sync script",
+        "Run starter kit installer against a smoke target",
+        "Run starter kit installer against the starter kit repository root",
+        "Run root ledger audit",
+        "Run GitHub sync dry-run/apply and health-check for the starter kit repository",
+        "Simulate unmanaged issue detection locally"
+      ],
+      "success_metrics": [
+        "Starter kit repository has a real root issue ledger",
+        "GitHub Issues for starter kit governance are ledger-managed",
+        "Health-check reports governance_drift = 0",
+        "Repeated dry-run after apply has no pending actions"
+      ],
+      "risks": [
+        "Issue-event workflow may need repository rules to become required",
+        "Existing manual issues must be backfilled or closed to keep drift at zero"
+      ]
+    }
+  ]
+}

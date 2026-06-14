@@ -61,7 +61,9 @@ cp "$PAYLOAD_DIR/.github/workflows/issue-ledger-audit.yml" "$TARGET/.github/work
 cp "$PAYLOAD_DIR/.github/workflows/issue-ledger-sync.yml" "$TARGET/.github/workflows/issue-ledger-sync.yml"
 cp "$PAYLOAD_DIR/.github/labels.yml" "$TARGET/.github/labels.yml"
 cp "$PAYLOAD_DIR/.github/ISSUE_TEMPLATE/"*.yml "$TARGET/.github/ISSUE_TEMPLATE/"
-cp "$SCRIPT_DIR/AGENT_BOOTSTRAP_PROMPT.md" "$TARGET/AGENT_BOOTSTRAP_PROMPT.md"
+if [[ "$SCRIPT_DIR/AGENT_BOOTSTRAP_PROMPT.md" != "$TARGET/AGENT_BOOTSTRAP_PROMPT.md" ]]; then
+  cp "$SCRIPT_DIR/AGENT_BOOTSTRAP_PROMPT.md" "$TARGET/AGENT_BOOTSTRAP_PROMPT.md"
+fi
 
 LEDGER_TEMPLATE="$PAYLOAD_DIR/docs/ISSUE_LEDGER.json"
 LEDGER_TARGET="$TARGET/docs/ISSUE_LEDGER.json"
