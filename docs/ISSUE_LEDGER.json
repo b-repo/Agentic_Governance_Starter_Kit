@@ -122,7 +122,7 @@
       "id": "GOV-001",
       "title": "Enforce ledger-first issue governance in the starter kit",
       "phase": "0",
-      "status": "in_progress",
+      "status": "done",
       "priority": "high",
       "type": "governance",
       "github": {
@@ -131,7 +131,19 @@
       },
       "github_number": 4,
       "github_url": "https://github.com/b-repo/Agentic_Governance_Starter_Kit/issues/4",
-      "evidence": [],
+      "evidence": [
+        "AGENT_BOOTSTRAP_PROMPT.md",
+        "README.md",
+        "install.sh",
+        "docs/ISSUE_LEDGER.json",
+        "docs/ISSUE_GOVERNANCE.md",
+        "payload/docs/ISSUE_GOVERNANCE.md",
+        "payload/docs/STARTER_KIT_DEVELOPER_GUIDANCE.md",
+        "payload/scripts/governance/sync_issue_ledger.py",
+        "payload/.github/workflows/issue-ledger-sync.yml",
+        "scripts/governance/sync_issue_ledger.py",
+        ".github/workflows/issue-ledger-sync.yml"
+      ],
       "acceptance_criteria": [
         "Sync adopts existing GitHub Issues by github.number",
         "Health-check reports unmanaged open issues as governance drift",
