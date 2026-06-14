@@ -9,7 +9,10 @@ name: Issue Ledger Sync
     paths:
       - "docs/ISSUE_LEDGER.json"
       - "docs/ISSUE_GOVERNANCE.md"
+      - "docs/OFFICIAL_DOCS_POLICY.md"
+      - "docs/STARTER_KIT_DEVELOPER_GUIDANCE.md"
       - "scripts/governance/sync_issue_ledger.py"
+      - "scripts/governance/check_starter_kit_updates.py"
       - ".github/workflows/issue-ledger-sync.yml"
       - ".github/labels.yml"
       - ".github/ISSUE_TEMPLATE/**"
