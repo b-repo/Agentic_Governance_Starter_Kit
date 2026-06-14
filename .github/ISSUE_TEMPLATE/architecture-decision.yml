@@ -1,0 +1,23 @@
+name: Architecture Decision
+description: Track architecture decisions and follow-up work in ISSUE_LEDGER.json.
+title: "[ARCH] "
+labels: ["type:architecture"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+    validations:
+      required: true
+  - type: textarea
+    id: decision
+    attributes:
+      label: Decision
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance criteria
+    validations:
+      required: true

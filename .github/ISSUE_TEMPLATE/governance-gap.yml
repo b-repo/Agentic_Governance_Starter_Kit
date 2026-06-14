@@ -1,0 +1,23 @@
+name: Governance Gap
+description: Track governance drift, missing controls, and process gaps.
+title: "[GOV] "
+labels: ["type:governance"]
+body:
+  - type: textarea
+    id: gap
+    attributes:
+      label: Governance gap
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+    validations:
+      required: true
+  - type: textarea
+    id: recovery
+    attributes:
+      label: Recovery plan
+    validations:
+      required: true

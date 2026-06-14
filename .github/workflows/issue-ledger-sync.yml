@@ -1,0 +1,77 @@
+name: Issue Ledger Sync
+
+"on":
+  issues:
+    types: [opened, edited, reopened, labeled, unlabeled]
+  push:
+    branches:
+      - main
+      - master
+      - "release/**"
+    paths:
+      - "docs/ISSUE_LEDGER.json"
+      - "docs/ISSUE_GOVERNANCE.md"
+      - "docs/OFFICIAL_DOCS_POLICY.md"
+      - "docs/STARTER_KIT_DEVELOPER_GUIDANCE.md"
+      - "scripts/governance/sync_issue_ledger.py"
+      - "scripts/governance/check_starter_kit_updates.py"
+      - ".github/workflows/issue-ledger-sync.yml"
+      - ".github/labels.yml"
+      - ".github/ISSUE_TEMPLATE/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Reject direct pushes to protected branches
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pr_count="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls" -H "Accept: application/vnd.github+json" --jq 'length')"
+          if [ "$pr_count" = "0" ]; then
+            echo "Direct pushes to protected branches are not allowed. Open a pull request from a named branch."
+            exit 1
+          fi
+
+      - name: Validate ledger before apply
+        run: |
+          python scripts/governance/sync_issue_ledger.py --audit --report
+
+      - name: Apply issue ledger sync
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/governance/sync_issue_ledger.py --repo "${GITHUB_REPOSITORY}" --apply
+
+      - name: Commit ledger links
+        if: github.event_name != 'issues'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(governance): update issue ledger GitHub links"
+          file_pattern: docs/ISSUE_LEDGER.json docs/ISSUE_LEDGER_AUDIT.md
+
+      - name: Health check governance drift
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/governance/sync_issue_ledger.py --repo "${GITHUB_REPOSITORY}" --health-check
