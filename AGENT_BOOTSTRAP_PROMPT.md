@@ -16,17 +16,23 @@ Follow this exact order without asking for step-by-step approval:
 4. Create or update `docs/ISSUE_LEDGER.json`.
 5. Run the governance audit and generate `docs/ISSUE_LEDGER_AUDIT.md`.
 6. Sync GitHub Issues in dry-run mode.
-7. If the user explicitly approves, run apply sync.
-8. Report back with:
+7. Run apply sync when GitHub credentials are available or the user approves credentialed sync.
+8. Run governance health-check and confirm `governance_drift = 0`.
+9. Report back with:
    - what was installed or updated,
    - which issues were created/updated/closed,
    - audit status,
+   - health-check status,
    - quality score summary,
    - any blocked items.
 
 Policy rules:
 
-- Sync to GitHub is always allowed.
+- `docs/ISSUE_LEDGER.json` is the source of truth.
+- Sync to GitHub is mandatory when the ledger exists.
+- Never push code or governance changes directly to `main`, `master`, or `release/*`.
+- Work from a named branch such as `governance/<short-scope>`, `feature/<short-scope>`, `fix/<short-scope>`, `docs/<short-scope>`, or `chore/<short-scope>`.
+- Publish changes through a pull request.
 - Automatic agentic execution is allowed only when gate is `ready` or `review`.
 - Automatic agentic execution is blocked when gate is `blocked`.
 - Prefer preserving existing validated work over rewriting it.
@@ -43,4 +49,4 @@ Repository convention:
 
 Short version:
 
-> Install the Agentic Governance Starter Kit, read the project planning, preserve completed work, generate semantically complete issues, audit them, dry-run sync to GitHub, and only apply sync if explicitly approved.
+> Install the Agentic Governance Starter Kit, read the project planning, preserve completed work, generate semantically complete issues, audit them, dry-run sync to GitHub, apply when credentials are available, and verify zero governance drift.

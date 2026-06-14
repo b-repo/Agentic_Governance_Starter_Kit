@@ -2,7 +2,7 @@
   "meta": {
     "project": "replace-me",
     "version": "1.0",
-    "last_updated": "2026-06-09",
+    "last_updated": "2026-06-14",
     "status_values": ["done", "in_progress", "planned", "blocked"],
     "policy": "Only issues with verifiable evidence can be marked done.",
     "semantic_required_fields_for_open": [
@@ -33,29 +33,44 @@
     {
       "id": "BOOT-001",
       "title": "Bootstrap issue governance",
-      "phase": "phase0",
+      "phase": "0",
       "status": "planned",
       "priority": "high",
-      "type": "ops",
+      "type": "governance",
       "github": {
         "number": null,
         "url": null
       },
+      "github_number": null,
+      "github_url": null,
       "evidence": [
         "docs/ISSUE_GOVERNANCE.md",
         "docs/ISSUE_LEDGER.json",
-        "scripts/governance/sync_issue_ledger.py"
+        "docs/ISSUE_LEDGER_AUDIT.md",
+        "scripts/governance/sync_issue_ledger.py",
+        ".github/workflows/issue-ledger-audit.yml",
+        ".github/workflows/issue-ledger-sync.yml",
+        ".github/labels.yml",
+        ".github/ISSUE_TEMPLATE/bug.yml",
+        ".github/ISSUE_TEMPLATE/feature.yml",
+        ".github/ISSUE_TEMPLATE/architecture-decision.yml",
+        ".github/ISSUE_TEMPLATE/technical-debt.yml",
+        ".github/ISSUE_TEMPLATE/governance-gap.yml",
+        ".github/ISSUE_TEMPLATE/documentation.yml"
       ],
       "acceptance_criteria": [
         "Audit passes locally",
         "GitHub dry-run sync works",
-        "Issue template contains semantic scope sections"
+        "GitHub apply sync works when credentials are available",
+        "Health check reports zero governance drift",
+        "Issue templates and labels are present"
       ],
-      "problem_statement": "Repository lacks a governance baseline for issue quality and agentic execution.",
+      "problem_statement": "Repository lacks a mandatory, executable, auditable, and self-synchronizing governance baseline for issue quality and GitHub Issue synchronization.",
       "scope_in": [
         "Install governance files",
         "Enable scoring and hybrid policy",
-        "Run audit and dry-run sync"
+        "Install issue templates and label definitions",
+        "Run audit, dry-run sync, apply sync, and health-check"
       ],
       "scope_out": [
         "Implement product code",
@@ -65,22 +80,33 @@
       "target_files": [
         "docs/ISSUE_GOVERNANCE.md",
         "docs/ISSUE_LEDGER.json",
+        "docs/ISSUE_LEDGER_AUDIT.md",
         "scripts/governance/sync_issue_ledger.py",
-        ".github/workflows/issue-ledger-audit.yml"
+        ".github/workflows/issue-ledger-audit.yml",
+        ".github/workflows/issue-ledger-sync.yml",
+        ".github/labels.yml",
+        ".github/ISSUE_TEMPLATE/"
       ],
       "implementation_steps": [
         "Copy governance payload",
         "Set project metadata",
-        "Run audit and generate report"
+        "Run audit and generate report",
+        "Run dry-run synchronization",
+        "Run apply synchronization when credentials are available",
+        "Run health-check and confirm zero governance drift"
       ],
       "test_plan": [
         "Audit command exits successfully",
         "Report generated under docs",
-        "Dry-run sync lists expected actions"
+        "Dry-run sync lists expected actions",
+        "Apply validates GitHub authentication before writing",
+        "Health-check fails when drift is detected"
       ],
       "success_metrics": [
         "Gate score >= 80 for bootstrap issue",
-        "No audit validation errors"
+        "No audit validation errors",
+        "No duplicate GitHub Issues are created by repeated apply runs",
+        "governance_drift remains 0 after apply"
       ],
       "risks": [
         "Missing GitHub CLI authentication",

@@ -49,10 +49,15 @@ echo "Project: $PROJECT_NAME"
 mkdir -p "$TARGET/docs"
 mkdir -p "$TARGET/scripts/governance"
 mkdir -p "$TARGET/.github/workflows"
+mkdir -p "$TARGET/.github/ISSUE_TEMPLATE"
 
 cp "$PAYLOAD_DIR/docs/ISSUE_GOVERNANCE.md" "$TARGET/docs/ISSUE_GOVERNANCE.md"
+cp "$PAYLOAD_DIR/docs/ISSUE_LEDGER_AUDIT.md" "$TARGET/docs/ISSUE_LEDGER_AUDIT.md"
 cp "$PAYLOAD_DIR/scripts/governance/sync_issue_ledger.py" "$TARGET/scripts/governance/sync_issue_ledger.py"
 cp "$PAYLOAD_DIR/.github/workflows/issue-ledger-audit.yml" "$TARGET/.github/workflows/issue-ledger-audit.yml"
+cp "$PAYLOAD_DIR/.github/workflows/issue-ledger-sync.yml" "$TARGET/.github/workflows/issue-ledger-sync.yml"
+cp "$PAYLOAD_DIR/.github/labels.yml" "$TARGET/.github/labels.yml"
+cp "$PAYLOAD_DIR/.github/ISSUE_TEMPLATE/"*.yml "$TARGET/.github/ISSUE_TEMPLATE/"
 cp "$SCRIPT_DIR/AGENT_BOOTSTRAP_PROMPT.md" "$TARGET/AGENT_BOOTSTRAP_PROMPT.md"
 
 LEDGER_TEMPLATE="$PAYLOAD_DIR/docs/ISSUE_LEDGER.json"
@@ -69,20 +74,12 @@ project_name = sys.argv[3]
 
 obj = json.loads(src.read_text(encoding='utf-8'))
 obj['meta']['project'] = project_name
-obj['meta']['last_updated'] = '2026-06-09'
+obj['meta']['last_updated'] = '2026-06-14'
 dst.write_text(json.dumps(obj, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
 print(f"Wrote {dst}")
 PY
 
 chmod +x "$TARGET/scripts/governance/sync_issue_ledger.py"
-
-if [[ ! -f "$TARGET/.gitignore" ]]; then
-  touch "$TARGET/.gitignore"
-fi
-
-if ! grep -q "ISSUE_LEDGER_AUDIT.md" "$TARGET/.gitignore"; then
-  echo "docs/ISSUE_LEDGER_AUDIT.md" >> "$TARGET/.gitignore"
-fi
 
 pushd "$TARGET" >/dev/null
 
@@ -100,15 +97,14 @@ if command -v gh >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/nu
 
   if [[ -n "$REPO_SLUG" ]]; then
     printf "\n-- Running GitHub sync dry-run for %s --\n" "$REPO_SLUG"
-    if ! python scripts/governance/sync_issue_ledger.py --repo "$REPO_SLUG"; then
-      echo "Warning: dry-run sync failed (continuing installation)."
-    fi
+    python scripts/governance/sync_issue_ledger.py --repo "$REPO_SLUG" --dry-run
 
     if [[ "$RUN_APPLY" == "true" ]]; then
       printf "\n-- Applying GitHub sync for %s --\n" "$REPO_SLUG"
-      if ! python scripts/governance/sync_issue_ledger.py --repo "$REPO_SLUG" --apply; then
-        echo "Warning: apply sync failed (installation completed without GitHub apply)."
-      fi
+      python scripts/governance/sync_issue_ledger.py --repo "$REPO_SLUG" --apply
+
+      printf "\n-- Running governance health check for %s --\n" "$REPO_SLUG"
+      python scripts/governance/sync_issue_ledger.py --repo "$REPO_SLUG" --health-check
     fi
   else
     printf "\nSkipping GitHub sync: could not infer repo slug from origin\n"
@@ -124,3 +120,6 @@ echo "Next steps:"
 echo "1) Review docs/ISSUE_GOVERNANCE.md"
 echo "2) Edit docs/ISSUE_LEDGER.json"
 echo "3) Run: python scripts/governance/sync_issue_ledger.py --audit --report"
+echo "4) Run: python scripts/governance/sync_issue_ledger.py --repo owner/repo --dry-run"
+echo "5) Run: python scripts/governance/sync_issue_ledger.py --repo owner/repo --apply"
+echo "6) Run: python scripts/governance/sync_issue_ledger.py --repo owner/repo --health-check"

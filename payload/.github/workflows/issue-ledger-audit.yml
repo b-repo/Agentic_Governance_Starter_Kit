@@ -4,17 +4,13 @@ name: Issue Ledger Audit
   pull_request:
     paths:
       - "docs/ISSUE_LEDGER.json"
+      - "docs/ISSUE_LEDGER_AUDIT.md"
       - "docs/ISSUE_GOVERNANCE.md"
       - "scripts/governance/sync_issue_ledger.py"
       - ".github/workflows/issue-ledger-audit.yml"
-  push:
-    branches:
-      - main
-    paths:
-      - "docs/ISSUE_LEDGER.json"
-      - "docs/ISSUE_GOVERNANCE.md"
-      - "scripts/governance/sync_issue_ledger.py"
-      - ".github/workflows/issue-ledger-audit.yml"
+      - ".github/workflows/issue-ledger-sync.yml"
+      - ".github/labels.yml"
+      - ".github/ISSUE_TEMPLATE/**"
 
 permissions:
   contents: read

@@ -1,0 +1,23 @@
+name: Feature
+description: Request an enhancement that should be tracked in ISSUE_LEDGER.json.
+title: "[FEATURE] "
+labels: ["type:feature"]
+body:
+  - type: textarea
+    id: problem_statement
+    attributes:
+      label: Problem statement
+    validations:
+      required: true
+  - type: textarea
+    id: scope_in
+    attributes:
+      label: Scope in
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance criteria
+    validations:
+      required: true
