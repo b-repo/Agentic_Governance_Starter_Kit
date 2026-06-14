@@ -26,6 +26,8 @@ This repository uses Governance-First Development. `docs/ISSUE_LEDGER.json` is t
 - Merges to `main`, `master`, or `release/*` must come from pull requests and then run apply synchronization and health-check.
 - Automatic agentic execution is blocked only when the issue gate is `blocked`.
 - Open issues must include minimum semantic fields in `docs/ISSUE_LEDGER.json`.
+- External integrations must be checked against current official documentation before implementation or debugging.
+- Developer agents must check for starter kit updates once per UTC day while active.
 
 ## Required Files
 
@@ -34,7 +36,10 @@ When `docs/ISSUE_LEDGER.json` exists, these files are mandatory:
 - `docs/ISSUE_GOVERNANCE.md`
 - `docs/ISSUE_LEDGER_AUDIT.md`
 - `docs/ISSUE_LEDGER.json`
+- `docs/OFFICIAL_DOCS_POLICY.md`
+- `docs/STARTER_KIT_DEVELOPER_GUIDANCE.md`
 - `scripts/governance/sync_issue_ledger.py`
+- `scripts/governance/check_starter_kit_updates.py`
 - `.github/workflows/issue-ledger-audit.yml`
 - `.github/workflows/issue-ledger-sync.yml`
 - `.github/ISSUE_TEMPLATE/`

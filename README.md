@@ -19,7 +19,10 @@ Portable package to install Governance-First Development in any repository.
 - `docs/ISSUE_GOVERNANCE.md`
 - `docs/ISSUE_LEDGER_AUDIT.md`
 - `docs/ISSUE_LEDGER.json`
+- `docs/OFFICIAL_DOCS_POLICY.md`
+- `docs/STARTER_KIT_DEVELOPER_GUIDANCE.md`
 - `scripts/governance/sync_issue_ledger.py`
+- `scripts/governance/check_starter_kit_updates.py`
 - `.github/workflows/issue-ledger-audit.yml`
 - `.github/workflows/issue-ledger-sync.yml`
 - `.github/ISSUE_TEMPLATE/`
@@ -30,6 +33,22 @@ Portable package to install Governance-First Development in any repository.
 `docs/ISSUE_LEDGER.json` is the source of truth for governed work. It is not passive documentation. When a project contains the ledger, the repository must also contain the audit workflow, sync workflow, labels, issue templates, governance documentation, and sync script.
 
 Pull requests run audit only. Local validation and installation can run dry-run synchronization. Direct pushes to `main`, `master`, or `release/*` are not allowed. PR merges to protected branches run apply synchronization and then a health check that compares the ledger with GitHub Issues.
+
+## Official Documentation First
+
+Every external integration, API, SDK, CLI, cloud service, OAuth flow, webhook, or vendor endpoint must be checked against the current official documentation before implementation or debugging. Agents must not rely only on model memory, old examples, community snippets, or previously known endpoints.
+
+Installed projects receive `docs/OFFICIAL_DOCS_POLICY.md`, and integration issues should record the official documentation URL plus the endpoint, SDK method, scope, parameter, or behavior used.
+
+## Daily Starter Kit Update Check
+
+When a developer agent is active in a project, it must check for starter kit updates at most once per UTC day. The installed helper records checks in `.agents/starter-kit-last-check`:
+
+```bash
+python scripts/governance/check_starter_kit_updates.py
+```
+
+The installer also runs this helper before audit so projects get a visible update-check status during governance maintenance.
 
 ## Quick Start
 
@@ -46,6 +65,8 @@ The installer copies the governance payload and `AGENT_BOOTSTRAP_PROMPT.md` into
 
 - Audit and report:
   - `python scripts/governance/sync_issue_ledger.py --audit --report`
+- Check starter kit updates:
+  - `python scripts/governance/check_starter_kit_updates.py`
 - Dry-run GitHub sync:
   - `python scripts/governance/sync_issue_ledger.py --repo owner/repo --dry-run`
 - Apply GitHub sync:
