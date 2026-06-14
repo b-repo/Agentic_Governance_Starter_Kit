@@ -1,6 +1,8 @@
 name: Issue Ledger Sync
 
 "on":
+  issues:
+    types: [opened, edited, reopened, labeled, unlabeled]
   push:
     branches:
       - main
@@ -39,6 +41,7 @@ jobs:
           python-version: "3.12"
 
       - name: Reject direct pushes to protected branches
+        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -60,6 +63,7 @@ jobs:
           python scripts/governance/sync_issue_ledger.py --repo "${GITHUB_REPOSITORY}" --apply
 
       - name: Commit ledger links
+        if: github.event_name != 'issues'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore(governance): update issue ledger GitHub links"

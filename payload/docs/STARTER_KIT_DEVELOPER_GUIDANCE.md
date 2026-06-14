@@ -38,6 +38,22 @@ When a developer agent is operating in any project that uses the starter kit, it
 4. Record the change in the issue ledger, audit notes, or project documentation.
 5. Report whether the project is compliant.
 
+## Ledger-First Issue Behavior
+
+When maintaining or applying the starter kit, governed project work must start in `docs/ISSUE_LEDGER.json`.
+
+Developer agents must not open standalone GitHub Issues manually for governed work. They must:
+
+1. Add or update a semantically complete ledger entry.
+2. Run audit and sync dry-run.
+3. Run apply sync when credentials are available.
+4. Confirm health-check reports `governance_drift = 0`.
+5. Only then implement, close, or report the governed work.
+
+If a manual GitHub Issue already exists, adopt it by recording `github.number` and `github.url` in the ledger, then run sync apply so the title, body, labels, and `ledger-id` marker are corrected.
+
+The starter kit sync script must keep this recovery path resilient by matching existing issues by `github.number` as well as by canonical title/body marker.
+
 ## Daily Starter Kit Update Check
 
 When a developer agent is active in a project, it must check for starter kit updates at most once per UTC day.

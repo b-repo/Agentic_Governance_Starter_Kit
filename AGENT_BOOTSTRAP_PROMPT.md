@@ -12,14 +12,15 @@ Follow this exact order without asking for step-by-step approval:
 
 1. Read the project planning and status documents.
 2. Check for starter kit updates once per UTC day when a developer agent is active. Use `.agents/starter-kit-last-check` or an equivalent local marker. If the marker is absent or older than today, check `https://github.com/b-repo/Agentic_Governance_Starter_Kit` for updates before installing, syncing, or auditing governance assets. If network access is unavailable, record and report that the update check was blocked.
-3. Identify what is already proven complete and mark it as done in the issue ledger.
-4. Extract the next scope into issues with semantic completeness.
-5. Create or update `docs/ISSUE_LEDGER.json`.
-6. Run the governance audit and generate `docs/ISSUE_LEDGER_AUDIT.md`.
-7. Sync GitHub Issues in dry-run mode.
-8. Run apply sync when GitHub credentials are available or the user approves credentialed sync.
-9. Run governance health-check and confirm `governance_drift = 0`.
-10. Report back with:
+3. Before implementing or fixing any non-trivial theme, create or update the corresponding item in `docs/ISSUE_LEDGER.json`. Do not create standalone GitHub Issues manually for governed project work.
+4. Identify what is already proven complete and mark it as done in the issue ledger.
+5. Extract the next scope into issues with semantic completeness.
+6. Create or update `docs/ISSUE_LEDGER.json`.
+7. Run the governance audit and generate `docs/ISSUE_LEDGER_AUDIT.md`.
+8. Sync GitHub Issues in dry-run mode.
+9. Run apply sync when GitHub credentials are available or the user approves credentialed sync.
+10. Run governance health-check and confirm `governance_drift = 0`.
+11. Report back with:
    - whether the daily starter kit update check ran,
    - what was installed or updated,
    - which issues were created/updated/closed,
@@ -32,6 +33,7 @@ Policy rules:
 
 - `docs/ISSUE_LEDGER.json` is the source of truth.
 - Sync to GitHub is mandatory when the ledger exists.
+- GitHub Issues are an execution surface generated or adopted by the ledger. Manually opened or edited issues without `ledger-managed`, canonical `[ISSUE-ID]` title, and `<!-- ledger-id: ... -->` body are governance drift and must be backfilled into the ledger or closed as unmanaged.
 - Never push code or governance changes directly to `main`, `master`, or `release/*`.
 - Work from a named branch such as `governance/<short-scope>`, `feature/<short-scope>`, `fix/<short-scope>`, `docs/<short-scope>`, or `chore/<short-scope>`.
 - Publish changes through a pull request.

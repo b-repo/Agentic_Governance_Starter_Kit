@@ -51,6 +51,16 @@ The audit command fails if any required file is missing.
 
 The ledger owns issue identity, title, status, labels, semantic scope, acceptance criteria, and GitHub linkage. GitHub Issues are created, updated, reopened, or closed from the ledger.
 
+For governed work, the sequence is ledger first, sync second, implementation third:
+
+1. Add or update the issue entry in `docs/ISSUE_LEDGER.json`.
+2. Run audit and GitHub sync dry-run.
+3. Apply sync so GitHub receives the canonical title, body, labels, and `ledger-id`.
+4. Implement the change under that governed issue.
+5. Mark it done only after evidence exists, then apply sync and health-check again.
+
+Do not create standalone GitHub Issues manually for governed project work. If a GitHub Issue is created outside the ledger, backfill it into `docs/ISSUE_LEDGER.json` with `github.number`/`github.url`, run audit, dry-run, apply sync, and health-check.
+
 `--apply` writes `github.number`, `github.url`, `github_number`, and `github_url` back to the ledger when GitHub issue links are discovered or created. This keeps future runs idempotent and auditable.
 
 ## Audit vs Apply
@@ -150,6 +160,7 @@ It reports:
 - `ledger_issues_count`
 - `github_linked_issues_count`
 - `missing_github_issues`
+- `unmanaged_open_issues`
 - `closed_mismatch`
 - `status_mismatch`
 - `label_mismatch`
@@ -160,6 +171,13 @@ If `governance_drift > 0`, the command fails.
 ## Governance Drift
 
 Governance drift means the ledger and GitHub Issues no longer describe the same governed work. Typical causes include manual edits in GitHub, missing issue creation, stale labels, or a completed ledger issue that remains open in GitHub.
+
+Open GitHub Issues are considered unmanaged drift when they are not linked to the ledger and do not have the canonical generated shape:
+
+- label `ledger-managed`;
+- title beginning with `[ISSUE-ID]`;
+- body marker `<!-- ledger-id: ISSUE-ID -->`;
+- `github.number`/`github.url` recorded in `docs/ISSUE_LEDGER.json`.
 
 The recovery path is to correct the ledger first, run audit, run dry-run, apply synchronization, and run health-check again.
 
@@ -191,9 +209,10 @@ The workflow uses `secrets.GITHUB_TOKEN` with:
 
 1. Run `python scripts/governance/sync_issue_ledger.py --audit --report`.
 2. Fix ledger schema, semantic fields, labels, or required files.
-3. Run `python scripts/governance/sync_issue_ledger.py --repo owner/repo --dry-run`.
-4. Run `python scripts/governance/sync_issue_ledger.py --repo owner/repo --apply`.
-5. Run `python scripts/governance/sync_issue_ledger.py --repo owner/repo --health-check`.
-6. Commit any ledger link updates produced by apply.
+3. Backfill any unmanaged GitHub Issue into `docs/ISSUE_LEDGER.json` using `github.number` and `github.url`, or close it if it is not governed project work.
+4. Run `python scripts/governance/sync_issue_ledger.py --repo owner/repo --dry-run`.
+5. Run `python scripts/governance/sync_issue_ledger.py --repo owner/repo --apply`.
+6. Run `python scripts/governance/sync_issue_ledger.py --repo owner/repo --health-check`.
+7. Commit any ledger link updates produced by apply.
 
 [README](../README.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)

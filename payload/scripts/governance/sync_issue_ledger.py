@@ -118,6 +118,7 @@ class HealthResult:
     ledger_issues_count: int
     github_linked_issues_count: int
     missing_github_issues: list[str]
+    unmanaged_open_issues: list[str]
     closed_mismatch: list[str]
     status_mismatch: list[str]
     label_mismatch: list[str]
@@ -126,6 +127,7 @@ class HealthResult:
     def governance_drift(self) -> int:
         return (
             len(self.missing_github_issues)
+            + len(self.unmanaged_open_issues)
             + len(self.closed_mismatch)
             + len(self.status_mismatch)
             + len(self.label_mismatch)
@@ -566,6 +568,28 @@ def index_issues(existing: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     return by_id
 
 
+def find_issue_by_number(existing: list[dict[str, Any]], number: int | None) -> dict[str, Any] | None:
+    if number is None:
+        return None
+    return next((x for x in existing if int(x.get("number", 0)) == number), None)
+
+
+def find_unmanaged_open_issues(existing: list[dict[str, Any]], managed_numbers: set[int]) -> list[str]:
+    unmanaged: list[str] = []
+    for item in existing:
+        number = int(item.get("number", 0))
+        if number in managed_numbers or item.get("state", "").upper() != "OPEN":
+            continue
+        labels = {x.get("name") for x in item.get("labels", []) if isinstance(x, dict)}
+        body = item.get("body") or ""
+        title = item.get("title") or ""
+        has_ledger_id = bool(re.search(r"ledger-id:\s*([A-Za-z0-9_.-]+)", body))
+        title_has_id = title.startswith("[") and "]" in title
+        if "ledger-managed" not in labels or not has_ledger_id or not title_has_id:
+            unmanaged.append(f"#{number}: {title}")
+    return unmanaged
+
+
 def sync_github(ledger_path: Path, ledger: dict[str, Any], apply: bool, repo: str) -> list[SyncAction]:
     repo = require_repo(repo)
     if apply:
@@ -593,6 +617,9 @@ def sync_github(ledger_path: Path, ledger: dict[str, Any], apply: bool, repo: st
         title = f"[{issue_id}] {issue['title']}"
         body = build_body(issue, q, gate_min)
         found = by_id.get(issue_id)
+        number = issue_number(issue)
+        if number and not found:
+            found = find_issue_by_number(existing, number)
 
         if not found:
             actions.append(SyncAction("issue:create", issue_id, title))
@@ -675,18 +702,21 @@ def health_check(ledger: dict[str, Any], repo: str) -> HealthResult:
     status_mismatch: list[str] = []
     label_mismatch: list[str] = []
     linked_count = 0
+    managed_numbers: set[int] = set()
 
     for issue in issues:
         issue_id = issue["id"]
         found = by_id.get(issue_id)
         number = issue_number(issue)
         if number and not found:
-            found = next((x for x in existing if int(x.get("number", 0)) == number), None)
+            found = find_issue_by_number(existing, number)
         if not found:
             missing.append(issue_id)
             continue
 
         linked_count += 1
+        if found.get("number"):
+            managed_numbers.add(int(found["number"]))
         desired_closed = issue.get("status") == DONE_STATUS
         currently_closed = found.get("state", "").upper() == "CLOSED"
         if desired_closed != currently_closed:
@@ -707,6 +737,7 @@ def health_check(ledger: dict[str, Any], repo: str) -> HealthResult:
         ledger_issues_count=len(issues),
         github_linked_issues_count=linked_count,
         missing_github_issues=missing,
+        unmanaged_open_issues=find_unmanaged_open_issues(existing, managed_numbers),
         closed_mismatch=closed_mismatch,
         status_mismatch=status_mismatch,
         label_mismatch=label_mismatch,
@@ -726,6 +757,7 @@ def print_health(result: HealthResult) -> None:
         "ledger_issues_count": result.ledger_issues_count,
         "github_linked_issues_count": result.github_linked_issues_count,
         "missing_github_issues": result.missing_github_issues,
+        "unmanaged_open_issues": result.unmanaged_open_issues,
         "closed_mismatch": result.closed_mismatch,
         "status_mismatch": result.status_mismatch,
         "label_mismatch": result.label_mismatch,

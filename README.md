@@ -32,6 +32,8 @@ Portable package to install Governance-First Development in any repository.
 
 `docs/ISSUE_LEDGER.json` is the source of truth for governed work. It is not passive documentation. When a project contains the ledger, the repository must also contain the audit workflow, sync workflow, labels, issue templates, governance documentation, and sync script.
 
+Work must enter the ledger before implementation. Do not open standalone GitHub Issues manually for governed project work. GitHub Issues are created or adopted by synchronization from `docs/ISSUE_LEDGER.json`.
+
 Pull requests run audit only. Local validation and installation can run dry-run synchronization. Direct pushes to `main`, `master`, or `release/*` are not allowed. PR merges to protected branches run apply synchronization and then a health check that compares the ledger with GitHub Issues.
 
 ## Official Documentation First
@@ -97,6 +99,7 @@ The expected complete state is:
 - Dry-run passes.
 - Apply passes when credentials are available.
 - Health check reports `governance_drift = 0`.
+- Open GitHub Issues are either ledger-managed or intentionally backfilled/closed.
 - Documentation is updated.
 - Tests pass.
 
