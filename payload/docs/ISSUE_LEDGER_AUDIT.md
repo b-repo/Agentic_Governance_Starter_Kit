@@ -1,4 +1,4 @@
-[README](../README.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)
+[README](../README.md) | [Scope Mapping](SCOPE_MAPPING.md) | [Scope Intake](SCOPE_INTAKE.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)
 
 # ISSUE LEDGER Audit Report
 
@@ -13,4 +13,4 @@
 
 - Run `python scripts/governance/sync_issue_ledger.py --audit --report` to generate the current audit report.
 
-[README](../README.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)
+[README](../README.md) | [Scope Mapping](SCOPE_MAPPING.md) | [Scope Intake](SCOPE_INTAKE.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)

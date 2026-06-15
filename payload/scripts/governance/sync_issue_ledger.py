@@ -71,6 +71,8 @@ BASE_LABELS = {
 }
 
 REQUIRED_FILES = [
+    "docs/SCOPE_MAPPING.md",
+    "docs/SCOPE_INTAKE.md",
     "docs/ISSUE_GOVERNANCE.md",
     "docs/ISSUE_LEDGER_AUDIT.md",
     "docs/ISSUE_LEDGER.json",
@@ -83,6 +85,7 @@ REQUIRED_FILES = [
     ".github/ISSUE_TEMPLATE/technical-debt.yml",
     ".github/ISSUE_TEMPLATE/governance-gap.yml",
     ".github/ISSUE_TEMPLATE/documentation.yml",
+    ".github/ISSUE_TEMPLATE/scope-mapping.yml",
     ".github/labels.yml",
 ]
 
@@ -278,6 +281,8 @@ def validate_required_files(errors: list[str]) -> None:
             errors.append("governance setup: audit workflow must run '--audit --report'")
         if "pull_request:" not in text:
             errors.append("governance setup: audit workflow must run on pull_request")
+        if "docs/SCOPE_MAPPING.md" not in text or "docs/SCOPE_INTAKE.md" not in text:
+            errors.append("governance setup: audit workflow must watch scope mapping files")
 
     sync_workflow = ROOT / ".github" / "workflows" / "issue-ledger-sync.yml"
     if sync_workflow.exists():
@@ -294,6 +299,8 @@ def validate_required_files(errors: list[str]) -> None:
             errors.append("governance setup: sync workflow must reject direct pushes to protected branches")
         if "pull-requests: read" not in text:
             errors.append("governance setup: sync workflow must be able to inspect associated pull requests")
+        if "docs/SCOPE_MAPPING.md" not in text or "docs/SCOPE_INTAKE.md" not in text:
+            errors.append("governance setup: sync workflow must watch scope mapping files")
 
 
 def audit_ledger(ledger: dict[str, Any]) -> AuditResult:
@@ -373,7 +380,7 @@ def write_report(ledger: dict[str, Any], audit: AuditResult) -> None:
     avg_open = round(sum(q.score for q in open_quality) / len(open_quality), 1) if open_quality else 0.0
 
     lines = [
-        "[README](../README.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)",
+        "[README](../README.md) | [Scope Mapping](SCOPE_MAPPING.md) | [Scope Intake](SCOPE_INTAKE.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)",
         "",
         "# ISSUE LEDGER Audit Report",
         "",
@@ -412,7 +419,7 @@ def write_report(ledger: dict[str, Any], audit: AuditResult) -> None:
     lines.extend(
         [
             "",
-            "[README](../README.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)",
+            "[README](../README.md) | [Scope Mapping](SCOPE_MAPPING.md) | [Scope Intake](SCOPE_INTAKE.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)",
             "",
         ]
     )
