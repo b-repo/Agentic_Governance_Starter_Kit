@@ -1,4 +1,4 @@
-[README](../README.md) | [Scope Mapping](SCOPE_MAPPING.md) | [Scope Intake](SCOPE_INTAKE.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)
+[README](../README.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)
 
 # Issue Governance and Agentic Delivery
 
@@ -6,7 +6,6 @@
 
 - [Policy Summary](#policy-summary)
 - [Required Files](#required-files)
-- [Scope-First Rule](#scope-first-rule)
 - [Issue Ledger Source of Truth](#issue-ledger-source-of-truth)
 - [Audit vs Apply](#audit-vs-apply)
 - [Label Taxonomy](#label-taxonomy)
@@ -21,7 +20,6 @@
 
 This repository uses Governance-First Development. `docs/ISSUE_LEDGER.json` is the canonical work ledger, and GitHub Issues are a synchronized execution surface.
 
-- Supplied scope files must be mapped before implementation.
 - Issue sync to GitHub is mandatory when the ledger exists.
 - Pull requests run audit only.
 - Direct pushes to `main`, `master`, or `release/*` are not allowed.
@@ -35,8 +33,6 @@ This repository uses Governance-First Development. `docs/ISSUE_LEDGER.json` is t
 
 When `docs/ISSUE_LEDGER.json` exists, these files are mandatory:
 
-- `docs/SCOPE_MAPPING.md`
-- `docs/SCOPE_INTAKE.md`
 - `docs/ISSUE_GOVERNANCE.md`
 - `docs/ISSUE_LEDGER_AUDIT.md`
 - `docs/ISSUE_LEDGER.json`
@@ -50,33 +46,6 @@ When `docs/ISSUE_LEDGER.json` exists, these files are mandatory:
 - `.github/labels.yml`
 
 The audit command fails if any required file is missing.
-
-## Scope-First Rule
-
-When the user supplies specification files, planning files, archives, screenshots, or other scope material, implementation must not start immediately.
-
-The required order is:
-
-1. Inventory every scope source in `docs/SCOPE_INTAKE.md`.
-2. Read or inspect each source.
-3. Ask blocking questions for unclear or open topics.
-4. Record assumptions and non-blocking risks.
-5. Decompose the full known scope into issues in `docs/ISSUE_LEDGER.json`.
-6. Sync those issues to GitHub.
-7. Implement one issue at a time.
-
-```mermaid
-flowchart TD
-  Scope["Scope files delivered"] --> Intake["Scope intake"]
-  Intake --> Questions["Questions and assumptions"]
-  Questions --> Issues["Governed issue ledger"]
-  Issues --> Sync["GitHub Issues sync"]
-  Sync --> Implementation["One issue at a time"]
-  Implementation --> Evidence["Tests and documentation"]
-  Evidence --> Closed["Closed GitHub Issues"]
-```
-
-Any later user adjustment must either update an existing issue as a clarification or create a new issue when it changes the agreed scope.
 
 ## Issue Ledger Source of Truth
 
@@ -218,8 +187,6 @@ A project is not complete when `docs/ISSUE_LEDGER.json` exists and GitHub synchr
 
 Final validation must fail for:
 
-- Missing scope mapping documents.
-- Known scope that is not represented by issues.
 - Governance drift greater than zero.
 - Missing sync workflow.
 - Missing audit workflow.
@@ -241,12 +208,11 @@ The workflow uses `secrets.GITHUB_TOKEN` with:
 ## Manual Recovery
 
 1. Run `python scripts/governance/sync_issue_ledger.py --audit --report`.
-2. Fix scope intake, ledger schema, semantic fields, labels, or required files.
-3. Ensure every known scope item maps to a ledger issue.
-4. Backfill any unmanaged GitHub Issue into `docs/ISSUE_LEDGER.json` using `github.number` and `github.url`, or close it if it is not governed project work.
+2. Fix ledger schema, semantic fields, labels, or required files.
+3. Backfill any unmanaged GitHub Issue into `docs/ISSUE_LEDGER.json` using `github.number` and `github.url`, or close it if it is not governed project work.
 4. Run `python scripts/governance/sync_issue_ledger.py --repo owner/repo --dry-run`.
 5. Run `python scripts/governance/sync_issue_ledger.py --repo owner/repo --apply`.
 6. Run `python scripts/governance/sync_issue_ledger.py --repo owner/repo --health-check`.
 7. Commit any ledger link updates produced by apply.
 
-[README](../README.md) | [Scope Mapping](SCOPE_MAPPING.md) | [Scope Intake](SCOPE_INTAKE.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)
+[README](../README.md) | [Issue Governance](ISSUE_GOVERNANCE.md) | [Issue Ledger](ISSUE_LEDGER.json) | [Audit Report](ISSUE_LEDGER_AUDIT.md)

@@ -1,0 +1,23 @@
+name: Technical Debt
+description: Track remediation work in ISSUE_LEDGER.json.
+title: "[DEBT] "
+labels: ["type:technical-debt"]
+body:
+  - type: textarea
+    id: problem_statement
+    attributes:
+      label: Problem statement
+    validations:
+      required: true
+  - type: textarea
+    id: target_files
+    attributes:
+      label: Target files
+    validations:
+      required: true
+  - type: textarea
+    id: test_plan
+    attributes:
+      label: Test plan
+    validations:
+      required: true

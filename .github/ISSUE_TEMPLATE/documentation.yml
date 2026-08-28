@@ -1,0 +1,23 @@
+name: Documentation
+description: Track documentation work in ISSUE_LEDGER.json.
+title: "[DOCS] "
+labels: ["type:documentation"]
+body:
+  - type: textarea
+    id: documentation_gap
+    attributes:
+      label: Documentation gap
+    validations:
+      required: true
+  - type: textarea
+    id: affected_pages
+    attributes:
+      label: Affected pages
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance criteria
+    validations:
+      required: true

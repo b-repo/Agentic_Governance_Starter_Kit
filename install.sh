@@ -55,12 +55,17 @@ cp "$PAYLOAD_DIR/docs/ISSUE_GOVERNANCE.md" "$TARGET/docs/ISSUE_GOVERNANCE.md"
 cp "$PAYLOAD_DIR/docs/SCOPE_MAPPING.md" "$TARGET/docs/SCOPE_MAPPING.md"
 cp "$PAYLOAD_DIR/docs/SCOPE_INTAKE.md" "$TARGET/docs/SCOPE_INTAKE.md"
 cp "$PAYLOAD_DIR/docs/ISSUE_LEDGER_AUDIT.md" "$TARGET/docs/ISSUE_LEDGER_AUDIT.md"
+cp "$PAYLOAD_DIR/docs/OFFICIAL_DOCS_POLICY.md" "$TARGET/docs/OFFICIAL_DOCS_POLICY.md"
+cp "$PAYLOAD_DIR/docs/STARTER_KIT_DEVELOPER_GUIDANCE.md" "$TARGET/docs/STARTER_KIT_DEVELOPER_GUIDANCE.md"
 cp "$PAYLOAD_DIR/scripts/governance/sync_issue_ledger.py" "$TARGET/scripts/governance/sync_issue_ledger.py"
+cp "$PAYLOAD_DIR/scripts/governance/check_starter_kit_updates.py" "$TARGET/scripts/governance/check_starter_kit_updates.py"
 cp "$PAYLOAD_DIR/.github/workflows/issue-ledger-audit.yml" "$TARGET/.github/workflows/issue-ledger-audit.yml"
 cp "$PAYLOAD_DIR/.github/workflows/issue-ledger-sync.yml" "$TARGET/.github/workflows/issue-ledger-sync.yml"
 cp "$PAYLOAD_DIR/.github/labels.yml" "$TARGET/.github/labels.yml"
 cp "$PAYLOAD_DIR/.github/ISSUE_TEMPLATE/"*.yml "$TARGET/.github/ISSUE_TEMPLATE/"
-cp "$SCRIPT_DIR/AGENT_BOOTSTRAP_PROMPT.md" "$TARGET/AGENT_BOOTSTRAP_PROMPT.md"
+if [[ "$SCRIPT_DIR/AGENT_BOOTSTRAP_PROMPT.md" != "$TARGET/AGENT_BOOTSTRAP_PROMPT.md" ]]; then
+  cp "$SCRIPT_DIR/AGENT_BOOTSTRAP_PROMPT.md" "$TARGET/AGENT_BOOTSTRAP_PROMPT.md"
+fi
 
 LEDGER_TEMPLATE="$PAYLOAD_DIR/docs/ISSUE_LEDGER.json"
 LEDGER_TARGET="$TARGET/docs/ISSUE_LEDGER.json"
@@ -82,8 +87,12 @@ print(f"Wrote {dst}")
 PY
 
 chmod +x "$TARGET/scripts/governance/sync_issue_ledger.py"
+chmod +x "$TARGET/scripts/governance/check_starter_kit_updates.py"
 
 pushd "$TARGET" >/dev/null
+
+printf "\n-- Checking starter kit updates --\n"
+python scripts/governance/check_starter_kit_updates.py || true
 
 printf "\n-- Running audit --\n"
 python scripts/governance/sync_issue_ledger.py --audit --report

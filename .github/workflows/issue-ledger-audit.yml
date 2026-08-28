@@ -6,8 +6,6 @@ name: Issue Ledger Audit
       - "docs/ISSUE_LEDGER.json"
       - "docs/ISSUE_LEDGER_AUDIT.md"
       - "docs/ISSUE_GOVERNANCE.md"
-      - "docs/SCOPE_MAPPING.md"
-      - "docs/SCOPE_INTAKE.md"
       - "docs/OFFICIAL_DOCS_POLICY.md"
       - "docs/STARTER_KIT_DEVELOPER_GUIDANCE.md"
       - "scripts/governance/sync_issue_ledger.py"
