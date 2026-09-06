@@ -45,6 +45,8 @@
       "github_url": null,
       "evidence": [
         "docs/ISSUE_GOVERNANCE.md",
+        "docs/SCOPE_MAPPING.md",
+        "docs/SCOPE_INTAKE.md",
         "docs/ISSUE_LEDGER.json",
         "docs/ISSUE_LEDGER_AUDIT.md",
         "scripts/governance/sync_issue_ledger.py",
@@ -56,17 +58,21 @@
         ".github/ISSUE_TEMPLATE/architecture-decision.yml",
         ".github/ISSUE_TEMPLATE/technical-debt.yml",
         ".github/ISSUE_TEMPLATE/governance-gap.yml",
-        ".github/ISSUE_TEMPLATE/documentation.yml"
+        ".github/ISSUE_TEMPLATE/documentation.yml",
+        ".github/ISSUE_TEMPLATE/scope-mapping.yml"
       ],
       "acceptance_criteria": [
         "Audit passes locally",
         "GitHub dry-run sync works",
         "GitHub apply sync works when credentials are available",
         "Health check reports zero governance drift",
-        "Issue templates and labels are present"
+        "Issue templates and labels are present",
+        "Scope mapping process is installed before development starts"
       ],
       "problem_statement": "Repository lacks a mandatory, executable, auditable, and self-synchronizing governance baseline for issue quality and GitHub Issue synchronization.",
       "scope_in": [
+        "Install scope-first development process",
+        "Install scope intake and scope mapping documents",
         "Install governance files",
         "Enable scoring and hybrid policy",
         "Install issue templates and label definitions",
@@ -79,6 +85,8 @@
       "dependencies": [],
       "target_files": [
         "docs/ISSUE_GOVERNANCE.md",
+        "docs/SCOPE_MAPPING.md",
+        "docs/SCOPE_INTAKE.md",
         "docs/ISSUE_LEDGER.json",
         "docs/ISSUE_LEDGER_AUDIT.md",
         "scripts/governance/sync_issue_ledger.py",
@@ -91,6 +99,8 @@
         "Copy governance payload",
         "Set project metadata",
         "Run audit and generate report",
+        "Map supplied scope files before implementation",
+        "Create detailed issues for the full known scope",
         "Run dry-run synchronization",
         "Run apply synchronization when credentials are available",
         "Run health-check and confirm zero governance drift"
@@ -99,11 +109,13 @@
         "Audit command exits successfully",
         "Report generated under docs",
         "Dry-run sync lists expected actions",
+        "Audit fails when scope mapping documents are missing",
         "Apply validates GitHub authentication before writing",
         "Health-check fails when drift is detected"
       ],
       "success_metrics": [
         "Gate score >= 80 for bootstrap issue",
+        "Known project scope is represented as ledger issues before implementation",
         "No audit validation errors",
         "No duplicate GitHub Issues are created by repeated apply runs",
         "governance_drift remains 0 after apply"

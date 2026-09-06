@@ -11,6 +11,8 @@ name: Issue Ledger Sync
     paths:
       - "docs/ISSUE_LEDGER.json"
       - "docs/ISSUE_GOVERNANCE.md"
+      - "docs/SCOPE_MAPPING.md"
+      - "docs/SCOPE_INTAKE.md"
       - "docs/OFFICIAL_DOCS_POLICY.md"
       - "docs/STARTER_KIT_DEVELOPER_GUIDANCE.md"
       - "scripts/governance/sync_issue_ledger.py"
@@ -67,7 +69,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore(governance): update issue ledger GitHub links"
-          file_pattern: docs/ISSUE_LEDGER.json docs/ISSUE_LEDGER_AUDIT.md
+          file_pattern: docs/ISSUE_LEDGER.json docs/ISSUE_LEDGER_AUDIT.md docs/SCOPE_INTAKE.md
 
       - name: Health check governance drift
         env:

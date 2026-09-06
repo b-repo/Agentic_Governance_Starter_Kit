@@ -1,6 +1,6 @@
 # Agentic Governance Starter Kit
 
-[README](README.md) | [Issue Governance](payload/docs/ISSUE_GOVERNANCE.md) | [Issue Ledger](payload/docs/ISSUE_LEDGER.json) | [Audit Report](payload/docs/ISSUE_LEDGER_AUDIT.md)
+[README](README.md) | [Scope Mapping](payload/docs/SCOPE_MAPPING.md) | [Scope Intake](payload/docs/SCOPE_INTAKE.md) | [Issue Governance](payload/docs/ISSUE_GOVERNANCE.md) | [Issue Ledger](payload/docs/ISSUE_LEDGER.json) | [Audit Report](payload/docs/ISSUE_LEDGER_AUDIT.md)
 
 Portable package to install Governance-First Development in any repository.
 
@@ -8,6 +8,9 @@ Portable package to install Governance-First Development in any repository.
 
 - [What This Kit Installs](#what-this-kit-installs)
 - [Governance-First Development](#governance-first-development)
+- [Scope-First Development](#scope-first-development)
+- [Official Documentation First](#official-documentation-first)
+- [Daily Starter Kit Update Check](#daily-starter-kit-update-check)
 - [Quick Start](#quick-start)
 - [Required Commands](#required-commands)
 - [GitHub Requirements](#github-requirements)
@@ -16,6 +19,8 @@ Portable package to install Governance-First Development in any repository.
 ## What This Kit Installs
 
 - `AGENT_BOOTSTRAP_PROMPT.md`
+- `docs/SCOPE_MAPPING.md`
+- `docs/SCOPE_INTAKE.md`
 - `docs/ISSUE_GOVERNANCE.md`
 - `docs/ISSUE_LEDGER_AUDIT.md`
 - `docs/ISSUE_LEDGER.json`
@@ -35,6 +40,20 @@ Portable package to install Governance-First Development in any repository.
 Work must enter the ledger before implementation. Do not open standalone GitHub Issues manually for governed project work. GitHub Issues are created or adopted by synchronization from `docs/ISSUE_LEDGER.json`.
 
 Pull requests run audit only. Local validation and installation can run dry-run synchronization. Direct pushes to `main`, `master`, or `release/*` are not allowed. PR merges to protected branches run apply synchronization and then a health check that compares the ledger with GitHub Issues.
+
+## Scope-First Development
+
+When the user provides scope files, the first development task is scope mapping. The agent must inventory the supplied files in `docs/SCOPE_INTAKE.md`, ask blocking questions, and decompose the full known scope into governed issues before implementation starts.
+
+```mermaid
+flowchart LR
+  Scope["Scope files"] --> Intake["docs/SCOPE_INTAKE.md"]
+  Intake --> Questions["Blocking questions"]
+  Questions --> Ledger["docs/ISSUE_LEDGER.json"]
+  Ledger --> GitHub["GitHub Issues"]
+  GitHub --> Work["Implement one issue at a time"]
+  Work --> Close["Test, document, mark done, close issue"]
+```
 
 ## Official Documentation First
 
@@ -61,7 +80,7 @@ From inside this kit folder:
 2. Or target another path:
    - `bash install.sh --target /path/to/repo --project-name my-project`
 
-The installer copies the governance payload and `AGENT_BOOTSTRAP_PROMPT.md` into the target repository.
+The installer copies the governance payload, scope mapping documents, and `AGENT_BOOTSTRAP_PROMPT.md` into the target repository.
 
 ## Required Commands
 
@@ -95,12 +114,16 @@ A generated project is incomplete when `docs/ISSUE_LEDGER.json` exists and any g
 
 The expected complete state is:
 
+- Scope files are inventoried and mapped.
+- Blocking scope questions are answered or explicitly recorded as assumptions.
+- Every known scope item is represented by a ledger issue.
 - Audit passes.
 - Dry-run passes.
 - Apply passes when credentials are available.
 - Health check reports `governance_drift = 0`.
+- Completed GitHub Issues are closed.
 - Open GitHub Issues are either ledger-managed or intentionally backfilled/closed.
 - Documentation is updated.
 - Tests pass.
 
-[README](README.md) | [Issue Governance](payload/docs/ISSUE_GOVERNANCE.md) | [Issue Ledger](payload/docs/ISSUE_LEDGER.json) | [Audit Report](payload/docs/ISSUE_LEDGER_AUDIT.md)
+[README](README.md) | [Scope Mapping](payload/docs/SCOPE_MAPPING.md) | [Scope Intake](payload/docs/SCOPE_INTAKE.md) | [Issue Governance](payload/docs/ISSUE_GOVERNANCE.md) | [Issue Ledger](payload/docs/ISSUE_LEDGER.json) | [Audit Report](payload/docs/ISSUE_LEDGER_AUDIT.md)

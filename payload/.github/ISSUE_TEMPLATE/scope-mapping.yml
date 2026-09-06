@@ -1,0 +1,23 @@
+name: Scope Mapping
+description: Track initial scope intake, open questions, and issue decomposition.
+title: "[SCOPE] "
+labels: ["type:governance"]
+body:
+  - type: textarea
+    id: source_files
+    attributes:
+      label: Source files
+    validations:
+      required: true
+  - type: textarea
+    id: open_questions
+    attributes:
+      label: Open questions
+    validations:
+      required: true
+  - type: textarea
+    id: issue_decomposition
+    attributes:
+      label: Issue decomposition
+    validations:
+      required: true
