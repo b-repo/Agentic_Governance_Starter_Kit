@@ -2,6 +2,19 @@
 
 # Issue Governance and Agentic Delivery
 
+## Canonical authority
+
+> **This is the payload copy of a derived distribution, not an authority.**
+>
+> The issue governance semantics it describes are canonically defined in `b-repo/b-constitution`:
+>
+> - **`constitution/repository-governance/008-issue-governance-and-agentic-delivery.md`** — canonical rule (governance model, required status values and statuses, ledger metadata, open-issue semantic minimum, quality score and weights, gate classes, GitHub synchronization contract, issue body contract, audit and CI gate, agentic delivery rules);
+> - `constitution/standards/007-distributed-definition-residency-standard.md` section 6 — distribution-kit rule.
+>
+> Where this document and the canonical rule differ, the canonical rule prevails and this document is defective. A repository that installs this payload must not cite this file as the authority for issue governance; it cites `008`, and it may keep this file only as an installed reference that names its origin and kit version.
+>
+> Local content here is limited to distribution defaults: concrete file paths, command examples and repository conventions.
+
 ## Contents
 
 - [Policy Summary](#policy-summary)
@@ -26,7 +39,7 @@ This repository uses Governance-First Development. `docs/ISSUE_LEDGER.json` is t
 - Pull requests run audit only.
 - Direct pushes to `main`, `master`, or `release/*` are not allowed.
 - Merges to `main`, `master`, or `release/*` must come from pull requests and then run apply synchronization and health-check.
-- Automatic agentic execution is blocked only when the issue gate is `blocked`.
+- Automatic agentic execution is blocked only when the issue gate is `blocked` (distribution of the canonical execution policy in `008`; not a kit-local policy).
 - Open issues must include minimum semantic fields in `docs/ISSUE_LEDGER.json`.
 - External integrations must be checked against current official documentation before implementation or debugging.
 - Developer agents must check for starter kit updates once per UTC day while active.
