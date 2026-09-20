@@ -4,8 +4,11 @@
 
 Portable package to install Governance-First Development in any repository.
 
+> **Canonical authority:** this kit distributes governance semantics that are canonically defined in `b-repo/b-constitution`. It is a distribution mechanism, not an authority. See [Canonical Authority and Distribution Contract](#canonical-authority-and-distribution-contract).
+
 ## Contents
 
+- [Canonical Authority and Distribution Contract](#canonical-authority-and-distribution-contract)
 - [What This Kit Installs](#what-this-kit-installs)
 - [Governance-First Development](#governance-first-development)
 - [Scope-First Development](#scope-first-development)
@@ -15,6 +18,35 @@ Portable package to install Governance-First Development in any repository.
 - [Required Commands](#required-commands)
 - [GitHub Requirements](#github-requirements)
 - [Completion Gate](#completion-gate)
+
+## Canonical Authority and Distribution Contract
+
+### Canonical authority
+
+The rules this kit distributes are defined **only** in `b-repo/b-constitution`:
+
+- `constitution/repository-governance/008-issue-governance-and-agentic-delivery.md` — the single authority for issue governance semantics: governance model, required status values, ledger metadata, open-issue semantic minimum, quality score and weights, gate classes, GitHub synchronization contract, issue body contract, audit and CI gate, agentic delivery rules;
+- `constitution/standards/007-distributed-definition-residency-standard.md` section 6 — the distribution-kit rule.
+
+This kit does not own those semantics. Where the kit and the canonical document differ, the canonical document prevails and the kit is defective.
+
+### Distribution rules this kit follows
+
+1. **Identify the canonical source** of every rule the kit distributes. Sections in this kit's documents state the canonical authority and the baseline they were derived from.
+2. **Distribute by reference, not by fork.** Payload adaptation is limited to paths, filenames and project metadata. Normative content is never modified, specialized or extended.
+3. **State origin in installed files.** Files installed into a target repository identify the kit and the version they came from, plus the canonical authority of the semantics they carry.
+4. **Consumers pin a version and do not vendor divergent copies.** A copy of the payload inside a consumer repository is permitted only as an identified build artefact of a stated kit version.
+5. **Provide drift detection.** `scripts/governance/check_starter_kit_updates.py` is the kit's divergence check. Consuming repositories are expected to run it in CI so drift is detected rather than discovered at implementation time (Standard 007 section 6.5).
+
+### What consumers must not conclude
+
+- A kit-installed file is **not** an independent authority for issue governance, and it must not be cited as one in a repository that installs it.
+- The kit does not create local policy. Statements such as the execution gate policy (`automatic agentic execution is blocked only when the gate is blocked`) are a **distribution of the canonical rule in `008`**, not a kit-local decision.
+
+### Related guidance
+
+- Kit maintenance guidance: [`docs/STARTER_KIT_DEVELOPER_GUIDANCE.md`](docs/STARTER_KIT_DEVELOPER_GUIDANCE.md);
+- distributed issue-governance document: [`docs/ISSUE_GOVERNANCE.md`](docs/ISSUE_GOVERNANCE.md) and its payload counterpart.
 
 ## What This Kit Installs
 

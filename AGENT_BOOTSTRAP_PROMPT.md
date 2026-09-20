@@ -1,5 +1,11 @@
 # Agent Bootstrap Prompt
 
+> **Canonical authority and baseline.** This prompt distributes governance semantics defined in `b-repo/b-constitution`. Before acting, resolve the effective baseline: the effective Constitution, including `constitution/standards/007-distributed-definition-residency-standard.md`, and the supersession register `constitution/governance/004-supersession-register.md`.
+>
+> The issue-governance semantics referenced below — status values, semantic minimum, quality score and gate policy — are canonically defined by `constitution/repository-governance/008-issue-governance-and-agentic-delivery.md`. This prompt and the files it installs are **distributions**, not authority. Where they differ from the canonical rule, the canonical rule prevails.
+>
+> The execution policy stated here (`sync is always allowed; automatic execution is blocked only when the gate is blocked`) is a distribution of the canonical rule in `008`, not a kit-local decision.
+
 Use this prompt in any target repository session.
 
 ---

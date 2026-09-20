@@ -1,6 +1,15 @@
-[Overview](../README.md) | [Official Docs Policy](OFFICIAL_DOCS_POLICY.md) | [Governance](GOVERNANCE.md)
+[Overview](../README.md) | [Official Docs Policy](OFFICIAL_DOCS_POLICY.md) | [Issue Governance](ISSUE_GOVERNANCE.md)
 
 # Starter Kit Developer Guidance
+
+> **Canonical authority.** This kit distributes governance semantics; it does not own them. Issue-governance semantics are canonically defined by `b-repo/b-constitution/constitution/repository-governance/008-issue-governance-and-agentic-delivery.md`, and the distribution rules are in `b-constitution/constitution/standards/007-distributed-definition-residency-standard.md` section 6.
+>
+> Consequences for anyone maintaining or applying this kit:
+>
+> - a semantic change to issue governance is made in `b-constitution` first and then distributed — never decided in the kit;
+> - the payload must not fork normative content; adaptation is limited to paths, filenames and project metadata;
+> - installed files must state their origin (kit identity and version) and the canonical authority of the semantics they carry;
+> - the update check in `scripts/governance/check_starter_kit_updates.py` is the supported drift control and consumers are expected to run it in CI.
 
 This guidance is for any developer agent maintaining or applying the Agentic Governance Starter Kit.
 

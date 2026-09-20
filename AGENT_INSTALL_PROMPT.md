@@ -1,5 +1,9 @@
 # Agent Install Prompt (Copy/Paste)
 
+> **Canonical authority.** The files this prompt installs distribute governance semantics defined in `b-repo/b-constitution`, canonically `constitution/repository-governance/008-issue-governance-and-agentic-delivery.md`, with the distribution rules in `constitution/standards/007-distributed-definition-residency-standard.md` section 6.
+>
+> Record the kit version you install in the target repository, and do not modify the normative content of an installed governance file: adapt paths, filenames and project metadata only. The target repository must not end up treating an installed file as the authority for issue governance — it cites `008`.
+
 Use this prompt inside any target project session:
 
 Go to https://github.com/b-repo/Agentic_Governance_Starter_Kit and install it in this repository automatically.
