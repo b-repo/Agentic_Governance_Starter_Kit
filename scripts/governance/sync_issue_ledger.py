@@ -297,7 +297,7 @@ def validate_required_files(errors: list[str]) -> None:
             errors.append("governance setup: sync workflow must run on main, master, and release/*")
         if "Reject direct pushes to protected branches" not in text:
             errors.append("governance setup: sync workflow must reject direct pushes to protected branches")
-        if "pull-requests: read" not in text:
+        if "pull-requests: read" not in text and "pull-requests: write" not in text:
             errors.append("governance setup: sync workflow must be able to inspect associated pull requests")
 
 
